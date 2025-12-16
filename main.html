@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>욕창방지 관제 시스템 - UI/UX 와이어프레임</title>
+    
+    <!-- Tailwind CSS - 스타일링 라이브러리 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* ============================== */
+        /* 커스텀 스타일 - 여기서 수정 가능 */
+        /* ============================== */
+        
+        /* 사이드바 배경색 */
+        .sidebar {
+            background-color: #1f2937;
+        }
+        
+        /* 메뉴 활성화 색상 */
+        .menu-active {
+            background-color: #374151;
+        }
+        
+        /* 상태 색상 */
+        .status-normal { background-color: #dcfce7; border-color: #86efac; }
+        .status-warning { background-color: #fef9c3; border-color: #fde047; }
+        .status-danger { background-color: #fee2e2; border-color: #fca5a5; }
+        
+        /* 입력 필드 스타일 (점선 테두리) */
+        .input-placeholder {
+            background-color: #f3f4f6;
+            border: 2px dashed #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- ============================== -->
+    <!-- 1. 로그인 화면 -->
+    <!-- ============================== -->
+    <div id="screen-login" class="screen min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+            <!-- 로고 -->
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="text-gray-500 text-xs">LOGO</span>
+                </div>
+                <h1 class="text-xl font-bold text-gray-700">욕창방지 관제 시스템</h1>
+                <p class="text-gray-500 text-sm mt-2">QuadCore</p>
+            </div>
+
+            <!-- 입력 폼 -->
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">아이디</label>
+                    <div class="h-12 input-placeholder rounded flex items-center px-3">
+                        <span class="text-gray-400 text-sm">영어 + 숫자 조합</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">비밀번호</label>
+                    <div class="h-12 input-placeholder rounded flex items-center px-3">
+                        <span class="text-gray-400 text-sm">••••••••</span>
+                    </div>
+                </div>
+                <button onclick="showScreen('dashboard')" class="w-full h-12 bg-gray-700 text-white rounded font-medium hover:bg-gray-800">
+                    로그인
+                </button>
+                <button onclick="showScreen('register')" class="w-full h-12 border-2 border-gray-300 text-gray-600 rounded font-medium hover:bg-gray-50">
+                    계정 등록
+                </button>
+            </div>
+            <p class="text-center text-gray-400 text-xs mt-6">FR-AD-007 ~ FR-AD-009</p>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- 2. 계정 등록 화면 -->
+    <!-- ============================== -->
+    <div id="screen-register" class="screen min-h-screen flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+            <h2 class="text-xl font-bold text-gray-700 mb-6">계정 등록</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">아이디 *</label>
+                    <div class="flex gap-2">
+                        <div class="flex-1 h-12 input-placeholder rounded flex items-center px-3">
+                            <span class="text-gray-400 text-sm">영어 + 숫자</span>
+                        </div>
+                        <button class="px-4 h-12 bg-gray-200 rounded text-sm">중복확인</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">이메일 *</label>
+                    <div class="h-12 input-placeholder rounded flex items-center px-3">
+                        <span class="text-gray-400 text-sm">example@hospital.com</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">비밀번호 *</label>
+                    <div class="h-12 input-placeholder rounded flex items-center px-3">
+                        <span class="text-gray-400 text-sm">8자 이상</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">비밀번호 확인 *</label>
+                    <div class="h-12 input-placeholder rounded"></div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">역할 *</label>
+                    <div class="h-12 input-placeholder rounded flex items-center px-3">
+                        <span class="text-gray-400 text-sm">간호사 / 요양보호사 선택</span>
+                    </div>
+                </div>
+                <button onclick="showScreen('login')" class="w-full h-12 bg-gray-700 text-white rounded font-medium">등록하기</button>
+                <button onclick="showScreen('login')" class="w-full h-12 border border-gray-300 text-gray-600 rounded">← 로그인으로</button>
+            </div>
+            <p class="text-center text-gray-400 text-xs mt-6">FR-AD-001 ~ FR-AD-006</p>
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- 3. 메인 레이아웃 (로그인 후) -->
+    <!-- ============================== -->
+    <div id="screen-dashboard" class="screen min-h-screen flex hidden">
+        
+        <!-- 사이드바 -->
+        <aside class="w-64 sidebar text-white p-4 flex-shrink-0">
+            <div class="mb-8">
+                <div class="w-12 h-12 bg-gray-600 rounded mb-2 flex items-center justify-center text-xs">LOGO</div>
+                <h1 class="font-bold">QuadCore</h1>
+                <p class="text-gray-400 text-xs">욕창방지 관제 시스템</p>
+            </div>
+
+            <!-- 메뉴 -->
+            <nav class="space-y-2">
+                <button onclick="showContent('dashboard')" id="menu-dashboard" class="menu-btn w-full text-left px-4 py-3 rounded menu-active">
+                    <div>📊 대시보드</div>
+                    <div class="text-xs text-gray-500">HRGG_500</div>
+                </button>
+                <button onclick="showContent('patients')" id="menu-patients" class="menu-btn w-full text-left px-4 py-3 rounded text-gray-400 hover:bg-gray-700">
+                    <div>🛏️ 침상 관리</div>
+                    <div class="text-xs text-gray-500">HRGG_300~400</div>
+                </button>
+                <button onclick="showContent('monitoring')" id="menu-monitoring" class="menu-btn w-full text-left px-4 py-3 rounded text-gray-400 hover:bg-gray-700">
+                    <div>👁️ 실시간 모니터링</div>
+                    <div class="text-xs text-gray-500">FR-MO</div>
+                </button>
+                <button onclick="showContent('alerts')" id="menu-alerts" class="menu-btn w-full text-left px-4 py-3 rounded text-gray-400 hover:bg-gray-700">
+                    <div>🔔 알림 센터</div>
+                    <div class="text-xs text-gray-500">HRGG_600</div>
+                </button>
+                <button onclick="showContent('guide')" id="menu-guide" class="menu-btn w-full text-left px-4 py-3 rounded text-gray-400 hover:bg-gray-700">
+                    <div>📖 체위 가이드</div>
+                    <div class="text-xs text-gray-500">HRGG_700</div>
+                </button>
+                <button onclick="showContent('reports')" id="menu-reports" class="menu-btn w-full text-left px-4 py-3 rounded text-gray-400 hover:bg-gray-700">
+                    <div>📄 보고서</div>
+                    <div class="text-xs text-gray-500">HRGG_800</div>
+                </button>
+                <button onclick="showContent('settings')" id="menu-settings" class="menu-btn w-full text-left px-4 py-3 rounded text-gray-400 hover:bg-gray-700">
+                    <div>⚙️ 설정</div>
+                    <div class="text-xs text-gray-500">NFR</div>
+                </button>
+            </nav>
+
+            <button onclick="showScreen('login')" class="w-full mt-8 px-4 py-2 text-gray-400 hover:text-white text-left">
+                🚪 로그아웃
+            </button>
+        </aside>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <main class="flex-1 p-6 overflow-auto">
+            
+            <!-- ============================== -->
+            <!-- 대시보드 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-dashboard" class="content space-y-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">관제 대시보드</h2>
+                        <p class="text-gray-500">실시간 환자 모니터링 현황</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="px-4 py-2 bg-white rounded shadow text-sm">현재 시간: 14:32:15</div>
+                        <div class="px-4 py-2 bg-red-100 text-red-700 rounded shadow text-sm font-medium">🔔 알림 3건</div>
+                    </div>
+                </div>
+
+                <!-- 상태 요약 카드 -->
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full mb-2"></div>
+                        <div class="text-3xl font-bold text-gray-800">24</div>
+                        <div class="text-gray-500 text-sm">전체 환자</div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="w-3 h-3 bg-green-500 rounded-full mb-2"></div>
+                        <div class="text-3xl font-bold text-gray-800">18</div>
+                        <div class="text-gray-500 text-sm">정상</div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full mb-2"></div>
+                        <div class="text-3xl font-bold text-gray-800">4</div>
+                        <div class="text-gray-500 text-sm">주의</div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mb-2"></div>
+                        <div class="text-3xl font-bold text-gray-800">2</div>
+                        <div class="text-gray-500 text-sm">위험</div>
+                    </div>
+                </div>
+
+                <!-- 병실별 현황 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">병실별 현황 (실시간)</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <!-- 101호 -->
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4">
+                            <h4 class="font-medium text-gray-700 mb-3">101호</h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 A</div><div class="text-xs text-gray-500">45분</div></div>
+                                <div class="p-3 rounded text-center status-warning border"><div class="font-medium">침상 B</div><div class="text-xs text-gray-500">1시간 52분</div></div>
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 C</div><div class="text-xs text-gray-500">23분</div></div>
+                                <div class="p-3 rounded text-center status-danger border animate-pulse"><div class="font-medium">침상 D</div><div class="text-xs text-gray-500">2시간 15분</div></div>
+                            </div>
+                        </div>
+                        <!-- 102호 -->
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4">
+                            <h4 class="font-medium text-gray-700 mb-3">102호</h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 A</div><div class="text-xs text-gray-500">12분</div></div>
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 B</div><div class="text-xs text-gray-500">38분</div></div>
+                                <div class="p-3 rounded text-center status-warning border"><div class="font-medium">침상 C</div><div class="text-xs text-gray-500">1시간 45분</div></div>
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 D</div><div class="text-xs text-gray-500">5분</div></div>
+                            </div>
+                        </div>
+                        <!-- 103호 -->
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4">
+                            <h4 class="font-medium text-gray-700 mb-3">103호</h4>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="p-3 rounded text-center status-warning border"><div class="font-medium">침상 A</div><div class="text-xs text-gray-500">1시간 30분</div></div>
+                                <div class="p-3 rounded text-center status-danger border animate-pulse"><div class="font-medium">침상 B</div><div class="text-xs text-gray-500">2시간 30분</div></div>
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 C</div><div class="text-xs text-gray-500">20분</div></div>
+                                <div class="p-3 rounded text-center status-normal border"><div class="font-medium">침상 D</div><div class="text-xs text-gray-500">55분</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 최근 알림 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">최근 알림</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 rounded bg-red-50 border-l-4 border-red-500">
+                            <div class="flex items-center gap-4">
+                                <span class="text-gray-500 text-sm">14:30</span>
+                                <span class="font-medium">103호 B</span>
+                                <span class="text-gray-600">체위 변경 필요 (2시간 초과)</span>
+                            </div>
+                            <button class="px-3 py-1 bg-gray-200 rounded text-sm">확인</button>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded bg-red-50 border-l-4 border-red-500">
+                            <div class="flex items-center gap-4">
+                                <span class="text-gray-500 text-sm">14:25</span>
+                                <span class="font-medium">101호 D</span>
+                                <span class="text-gray-600">체위 변경 필요 (2시간 초과)</span>
+                            </div>
+                            <button class="px-3 py-1 bg-gray-200 rounded text-sm">확인</button>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded bg-yellow-50 border-l-4 border-yellow-500">
+                            <div class="flex items-center gap-4">
+                                <span class="text-gray-500 text-sm">14:15</span>
+                                <span class="font-medium">101호 B</span>
+                                <span class="text-gray-600">자세 유지 시간 주의</span>
+                            </div>
+                            <button class="px-3 py-1 bg-gray-200 rounded text-sm">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- 침상 관리 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-patients" class="content space-y-6 hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">침상 관리</h2>
+                        <p class="text-gray-500">디바이스-환자 매핑 관리</p>
+                    </div>
+                    <button class="px-4 py-2 bg-gray-700 text-white rounded">+ 신규 환자 등록</button>
+                </div>
+
+                <!-- 검색 -->
+                <div class="bg-white rounded-lg shadow p-4 flex gap-4">
+                    <div class="flex-1 h-10 input-placeholder rounded flex items-center px-3">
+                        <span class="text-gray-400 text-sm">🔍 환자명 또는 침상 ID 검색...</span>
+                    </div>
+                    <div class="h-10 px-4 input-placeholder rounded flex items-center">
+                        <span class="text-gray-400 text-sm">병실 필터 ▼</span>
+                    </div>
+                </div>
+
+                <!-- 테이블 -->
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">침상 ID</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">환자명</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">욕창 단계</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">욕창 부위</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">디바이스 상태</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">액션</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 font-mono text-sm">101-A</td>
+                                <td class="px-4 py-3">김○○</td>
+                                <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-700">1단계</span></td>
+                                <td class="px-4 py-3 text-gray-600">천골</td>
+                                <td class="px-4 py-3"><span class="flex items-center gap-1 text-sm text-green-600"><span class="w-2 h-2 rounded-full bg-green-500"></span>연결됨</span></td>
+                                <td class="px-4 py-3"><button class="px-2 py-1 bg-gray-200 rounded text-xs mr-1">수정</button><button class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">삭제</button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 font-mono text-sm">101-B</td>
+                                <td class="px-4 py-3">이○○</td>
+                                <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs bg-yellow-100 text-yellow-700">2단계</span></td>
+                                <td class="px-4 py-3 text-gray-600">발꿈치</td>
+                                <td class="px-4 py-3"><span class="flex items-center gap-1 text-sm text-green-600"><span class="w-2 h-2 rounded-full bg-green-500"></span>연결됨</span></td>
+                                <td class="px-4 py-3"><button class="px-2 py-1 bg-gray-200 rounded text-xs mr-1">수정</button><button class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">삭제</button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 font-mono text-sm">101-C</td>
+                                <td class="px-4 py-3">박○○</td>
+                                <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs bg-gray-100">없음</span></td>
+                                <td class="px-4 py-3 text-gray-600">-</td>
+                                <td class="px-4 py-3"><span class="flex items-center gap-1 text-sm text-red-600"><span class="w-2 h-2 rounded-full bg-red-500"></span>연결 끊김</span></td>
+                                <td class="px-4 py-3"><button class="px-2 py-1 bg-gray-200 rounded text-xs mr-1">수정</button><button class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">삭제</button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 font-mono text-sm">101-D</td>
+                                <td class="px-4 py-3">최○○</td>
+                                <td class="px-4 py-3"><span class="px-2 py-1 rounded text-xs bg-red-100 text-red-700">3단계</span></td>
+                                <td class="px-4 py-3 text-gray-600">엉덩이</td>
+                                <td class="px-4 py-3"><span class="flex items-center gap-1 text-sm text-green-600"><span class="w-2 h-2 rounded-full bg-green-500"></span>연결됨</span></td>
+                                <td class="px-4 py-3"><button class="px-2 py-1 bg-gray-200 rounded text-xs mr-1">수정</button><button class="px-2 py-1 bg-red-100 text-red-600 rounded text-xs">삭제</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 등록 모달 예시 -->
+                <div class="bg-white rounded-lg shadow p-6 border-2 border-dashed border-blue-300">
+                    <h3 class="font-bold text-gray-700 mb-4">📋 신규 환자 등록 모달 (예시)</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">침상 ID *</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">자동검색 또는 직접입력</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">환자명 *</label>
+                            <div class="h-10 input-placeholder rounded"></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">욕창 단계</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">없음 / 1~4단계</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">욕창 부위</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">다중 선택</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- 실시간 모니터링 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-monitoring" class="content space-y-6 hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">실시간 모니터링</h2>
+                        <p class="text-gray-500">카메라 영상 및 스켈레톤 좌표</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-gray-200 rounded">2x2</button>
+                        <button class="px-4 py-2 bg-gray-700 text-white rounded">3x2</button>
+                        <button class="px-4 py-2 bg-gray-200 rounded">4x2</button>
+                    </div>
+                </div>
+
+                <!-- 카메라 그리드 -->
+                <div class="grid grid-cols-3 gap-4">
+                    <!-- 카메라 1 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden border-2 border-transparent">
+                        <div class="aspect-video bg-gray-800 relative flex items-center justify-center">
+                            <span class="text-gray-500">카메라 영상</span>
+                            <svg class="absolute opacity-50" width="80" height="120" viewBox="0 0 80 120">
+                                <circle cx="40" cy="15" r="10" fill="#4ADE80"/>
+                                <line x1="40" y1="25" x2="40" y2="60" stroke="#4ADE80" stroke-width="2"/>
+                                <line x1="40" y1="35" x2="20" y2="55" stroke="#4ADE80" stroke-width="2"/>
+                                <line x1="40" y1="35" x2="60" y2="55" stroke="#4ADE80" stroke-width="2"/>
+                                <line x1="40" y1="60" x2="25" y2="100" stroke="#4ADE80" stroke-width="2"/>
+                                <line x1="40" y1="60" x2="55" y2="100" stroke="#4ADE80" stroke-width="2"/>
+                            </svg>
+                            <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white bg-green-500">정상</div>
+                        </div>
+                        <div class="p-3 flex justify-between items-center">
+                            <div><span class="font-mono text-sm text-gray-500">101-A</span><span class="ml-2 font-medium">김○○</span></div>
+                            <span class="text-sm text-gray-600">현재: 좌측위</span>
+                        </div>
+                    </div>
+                    <!-- 카메라 2 (주의) -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden border-2 border-yellow-500">
+                        <div class="aspect-video bg-gray-800 relative flex items-center justify-center">
+                            <span class="text-gray-500">카메라 영상</span>
+                            <svg class="absolute opacity-50" width="80" height="120" viewBox="0 0 80 120">
+                                <circle cx="40" cy="15" r="10" fill="#FACC15"/>
+                                <line x1="40" y1="25" x2="40" y2="60" stroke="#FACC15" stroke-width="2"/>
+                                <line x1="40" y1="35" x2="20" y2="55" stroke="#FACC15" stroke-width="2"/>
+                                <line x1="40" y1="35" x2="60" y2="55" stroke="#FACC15" stroke-width="2"/>
+                                <line x1="40" y1="60" x2="25" y2="100" stroke="#FACC15" stroke-width="2"/>
+                                <line x1="40" y1="60" x2="55" y2="100" stroke="#FACC15" stroke-width="2"/>
+                            </svg>
+                            <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white bg-yellow-500">주의</div>
+                        </div>
+                        <div class="p-3 flex justify-between items-center">
+                            <div><span class="font-mono text-sm text-gray-500">101-B</span><span class="ml-2 font-medium">이○○</span></div>
+                            <span class="text-sm text-gray-600">현재: 앙와위</span>
+                        </div>
+                    </div>
+                    <!-- 카메라 3 (위험) -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden border-2 border-red-500">
+                        <div class="aspect-video bg-gray-800 relative flex items-center justify-center">
+                            <span class="text-gray-500">카메라 영상</span>
+                            <svg class="absolute opacity-50" width="80" height="120" viewBox="0 0 80 120">
+                                <circle cx="40" cy="15" r="10" fill="#F87171"/>
+                                <line x1="40" y1="25" x2="40" y2="60" stroke="#F87171" stroke-width="2"/>
+                                <line x1="40" y1="35" x2="20" y2="55" stroke="#F87171" stroke-width="2"/>
+                                <line x1="40" y1="35" x2="60" y2="55" stroke="#F87171" stroke-width="2"/>
+                                <line x1="40" y1="60" x2="25" y2="100" stroke="#F87171" stroke-width="2"/>
+                                <line x1="40" y1="60" x2="55" y2="100" stroke="#F87171" stroke-width="2"/>
+                            </svg>
+                            <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white bg-red-500">위험</div>
+                        </div>
+                        <div class="p-3 flex justify-between items-center">
+                            <div><span class="font-mono text-sm text-gray-500">101-D</span><span class="ml-2 font-medium">최○○</span></div>
+                            <span class="text-sm text-gray-600">현재: 앙와위</span>
+                        </div>
+                    </div>
+                    <!-- 카메라 4~6 -->
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="aspect-video bg-gray-800 relative flex items-center justify-center">
+                            <span class="text-gray-500">카메라 영상</span>
+                            <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white bg-green-500">정상</div>
+                        </div>
+                        <div class="p-3"><span class="font-mono text-sm text-gray-500">102-A</span><span class="ml-2 font-medium">정○○</span></div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow overflow-hidden border-2 border-yellow-500">
+                        <div class="aspect-video bg-gray-800 relative flex items-center justify-center">
+                            <span class="text-gray-500">카메라 영상</span>
+                            <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white bg-yellow-500">주의</div>
+                        </div>
+                        <div class="p-3"><span class="font-mono text-sm text-gray-500">102-C</span><span class="ml-2 font-medium">홍○○</span></div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow overflow-hidden border-2 border-red-500">
+                        <div class="aspect-video bg-gray-800 relative flex items-center justify-center">
+                            <span class="text-gray-500">카메라 영상</span>
+                            <div class="absolute top-2 right-2 px-2 py-1 rounded text-xs text-white bg-red-500">위험</div>
+                        </div>
+                        <div class="p-3"><span class="font-mono text-sm text-gray-500">103-B</span><span class="ml-2 font-medium">강○○</span></div>
+                    </div>
+                </div>
+
+                <!-- 상세 정보 -->
+                <div class="bg-white rounded-lg shadow p-6 border-2 border-dashed border-blue-300">
+                    <h3 class="font-bold text-gray-700 mb-4">📊 환자 상세 정보 (클릭 시 확장)</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="p-4 bg-gray-50 rounded">
+                            <div class="text-sm text-gray-500 mb-1">현재 자세</div>
+                            <div class="text-xl font-bold">앙와위 (Supine)</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded">
+                            <div class="text-sm text-gray-500 mb-1">유지 시간</div>
+                            <div class="text-xl font-bold text-red-600">2시간 15분</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded">
+                            <div class="text-sm text-gray-500 mb-1">권장 변경 시간</div>
+                            <div class="text-xl font-bold">2시간 (초과)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- 알림 센터 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-alerts" class="content space-y-6 hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">알림 센터</h2>
+                        <p class="text-gray-500">욕창 위험도 분석 및 알림</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-gray-200 rounded">전체</button>
+                        <button class="px-4 py-2 bg-red-100 text-red-700 rounded">위험 (2)</button>
+                        <button class="px-4 py-2 bg-yellow-100 text-yellow-700 rounded">주의 (4)</button>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p class="text-blue-700 text-sm">ℹ️ <strong>에스컬레이션 정책:</strong> 10분 내 미확인 시 상위 담당자에게 자동 전달</p>
+                </div>
+
+                <!-- 알림 목록 -->
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-red-500 ring-2 ring-blue-200">
+                        <div class="flex justify-between items-start">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center bg-red-100"><span class="text-2xl">🚨</span></div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">위험</span>
+                                        <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">NEW</span>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 mt-1">체위 변경 필요</h4>
+                                    <p class="text-gray-600">103호 B - 강○○</p>
+                                    <p class="text-sm text-gray-500 mt-1">앙와위 2시간 30분 유지 중</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-gray-500 text-sm">14:30</div>
+                                <div class="mt-2 space-x-2">
+                                    <button class="px-3 py-1 bg-gray-700 text-white rounded text-sm">확인 및 조치</button>
+                                    <button class="px-3 py-1 bg-gray-200 rounded text-sm">가이드</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-red-500 ring-2 ring-blue-200">
+                        <div class="flex justify-between items-start">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center bg-red-100"><span class="text-2xl">🚨</span></div>
+                                <div>
+                                    <span class="px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">위험</span>
+                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">NEW</span>
+                                    <h4 class="font-bold text-gray-800 mt-1">체위 변경 필요</h4>
+                                    <p class="text-gray-600">101호 D - 최○○</p>
+                                    <p class="text-sm text-gray-500 mt-1">앙와위 2시간 15분 유지 중</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-gray-500 text-sm">14:25</div>
+                                <div class="mt-2"><button class="px-3 py-1 bg-gray-700 text-white rounded text-sm">확인 및 조치</button></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-start">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center bg-yellow-100"><span class="text-2xl">⚠️</span></div>
+                                <div>
+                                    <span class="px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">주의</span>
+                                    <h4 class="font-bold text-gray-800 mt-1">자세 유지 시간 주의</h4>
+                                    <p class="text-gray-600">101호 B - 이○○</p>
+                                    <p class="text-sm text-gray-500 mt-1">앙와위 1시간 52분 (임계값: 2시간)</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-gray-500 text-sm">14:15</div>
+                                <div class="mt-2"><button class="px-3 py-1 bg-gray-200 rounded text-sm">확인</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- 체위 가이드 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-guide" class="content space-y-6 hidden">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">체위 변경 가이드</h2>
+                    <p class="text-gray-500">일러스트 및 애니메이션 가이드</p>
+                </div>
+
+                <!-- 현재 알림 환자 -->
+                <div class="bg-red-50 border-2 border-red-300 rounded-lg p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <span class="px-2 py-1 bg-red-500 text-white rounded text-sm">현재 알림</span>
+                            <h3 class="text-xl font-bold mt-2">103호 B - 강○○</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-red-600 font-bold text-lg">앙와위 → 좌측위 변경 필요</div>
+                            <div class="text-gray-500">유지 시간: 2시간 30분</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg p-6">
+                        <div class="grid grid-cols-3 gap-8 items-center">
+                            <div class="text-center">
+                                <div class="w-full aspect-square bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                                    <div class="text-center"><div class="text-4xl mb-2">🛏️</div><span class="text-gray-500">현재: 앙와위</span></div>
+                                </div>
+                                <p class="mt-2 text-sm text-gray-600">바로 누운 자세</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl text-gray-400">→</div>
+                                <p class="text-sm text-gray-500 mt-2">체위 변경</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-full aspect-square bg-green-50 rounded-lg flex items-center justify-center border-2 border-green-300">
+                                    <div class="text-center"><div class="text-4xl mb-2">🛌</div><span class="text-green-600 font-medium">권장: 좌측위</span></div>
+                                </div>
+                                <p class="mt-2 text-sm text-gray-600">왼쪽으로 누운 자세</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-bold text-gray-700 mb-3">📖 체위 변경 방법</h4>
+                            <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                                <div class="flex gap-2"><span class="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-xs">1</span><span>환자에게 체위 변경을 안내합니다</span></div>
+                                <div class="flex gap-2"><span class="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-xs">2</span><span>베개를 등 뒤에 받쳐줍니다</span></div>
+                                <div class="flex gap-2"><span class="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-xs">3</span><span>환자를 좌측으로 천천히 돌려눕힙니다</span></div>
+                                <div class="flex gap-2"><span class="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-xs">4</span><span>압박 부위를 확인합니다</span></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-4 bg-yellow-50 rounded-lg">
+                            <h4 class="font-bold text-yellow-700 mb-2">⚠️ 이 환자 주의사항</h4>
+                            <p class="text-sm text-gray-600">욕창 3단계 - 엉덩이 부위 압박 주의</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex justify-center">
+                        <button class="px-8 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">✓ 체위 변경 완료</button>
+                    </div>
+                </div>
+
+                <!-- 자세 유형 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">자세 유형 가이드</h3>
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-lg text-center"><div class="text-3xl mb-2">🛏️</div><div class="font-medium">앙와위</div><div class="text-sm text-gray-500">바로 누운 자세</div></div>
+                        <div class="p-4 bg-gray-50 rounded-lg text-center"><div class="text-3xl mb-2">🛌</div><div class="font-medium">좌측위</div><div class="text-sm text-gray-500">왼쪽으로 누운 자세</div></div>
+                        <div class="p-4 bg-gray-50 rounded-lg text-center"><div class="text-3xl mb-2">🛌</div><div class="font-medium">우측위</div><div class="text-sm text-gray-500">오른쪽으로 누운 자세</div></div>
+                        <div class="p-4 bg-gray-50 rounded-lg text-center"><div class="text-3xl mb-2">🛏️</div><div class="font-medium">복와위</div><div class="text-sm text-gray-500">엎드린 자세</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- 보고서 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-reports" class="content space-y-6 hidden">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">보고서 생성</h2>
+                    <p class="text-gray-500">환자별/기간별 자세 분석 보고서</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">보고서 옵션 선택</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">환자 선택</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">전체 또는 개별 선택</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">기간</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">일별 / 주별 / 월별</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">출력 형식</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">PDF / 웹 보고서</span></div>
+                        </div>
+                    </div>
+                    <button class="mt-4 px-6 py-2 bg-gray-700 text-white rounded">보고서 생성</button>
+                </div>
+
+                <!-- 미리보기 -->
+                <div class="bg-white rounded-lg shadow p-6 border-2 border-dashed border-blue-300">
+                    <h3 class="font-bold text-gray-700 mb-4">📄 보고서 미리보기 (예시)</h3>
+                    <div class="grid grid-cols-4 gap-4 mb-6">
+                        <div class="p-4 bg-gray-50 rounded"><div class="text-sm text-gray-500">분석 기간</div><div class="font-bold">2026.01.20 ~ 01.27</div></div>
+                        <div class="p-4 bg-gray-50 rounded"><div class="text-sm text-gray-500">총 체위 변경 횟수</div><div class="font-bold text-2xl">156회</div></div>
+                        <div class="p-4 bg-gray-50 rounded"><div class="text-sm text-gray-500">평균 유지 시간</div><div class="font-bold text-2xl">1.8시간</div></div>
+                        <div class="p-4 bg-gray-50 rounded"><div class="text-sm text-gray-500">욕창 단계 변화</div><div class="font-bold text-green-600">개선 ↓</div></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="aspect-video bg-gray-100 rounded flex items-center justify-center border-2 border-dashed border-gray-300"><span class="text-gray-400">📊 자세 빈도 차트</span></div>
+                        <div class="aspect-video bg-gray-100 rounded flex items-center justify-center border-2 border-dashed border-gray-300"><span class="text-gray-400">📈 유지 시간 추이</span></div>
+                    </div>
+                    <div class="mt-4 flex gap-2">
+                        <button class="px-4 py-2 bg-red-600 text-white rounded">📥 PDF 다운로드</button>
+                        <button class="px-4 py-2 bg-gray-200 rounded">🔗 공유 링크</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- 설정 콘텐츠 -->
+            <!-- ============================== -->
+            <div id="content-settings" class="content space-y-6 hidden">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">설정</h2>
+                    <p class="text-gray-500">시스템 및 알림 설정</p>
+                </div>
+
+                <!-- 알림 설정 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">🔔 알림 설정</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <div><div class="font-medium">앱 푸시 알림</div><div class="text-sm text-gray-500">모바일 알림 수신</div></div>
+                            <div class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5"></div></div>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <div><div class="font-medium">알람음</div><div class="text-sm text-gray-500">위험 알림 시 소리</div></div>
+                            <div class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5"></div></div>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <div><div class="font-medium">야간 모드</div><div class="text-sm text-gray-500">22:00 ~ 06:00 음량 감소</div></div>
+                            <div class="w-12 h-6 bg-green-500 rounded-full relative"><div class="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 임계값 설정 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">⏱️ 임계값 설정</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">주의 알림 (분)</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">90분 (기본값)</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">위험 알림 (분)</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">120분 (기본값)</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">알림 재발송 간격</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">10분 (기본값)</span></div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">에스컬레이션 시간</label>
+                            <div class="h-10 input-placeholder rounded flex items-center px-3"><span class="text-gray-400 text-sm">10분 (기본값)</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 시스템 상태 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">🖥️ 시스템 상태</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span>서버 연결</span><span class="w-3 h-3 rounded-full bg-green-500"></span></div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span>데이터베이스</span><span class="w-3 h-3 rounded-full bg-green-500"></span></div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span>카메라 디바이스 (24대)</span><div class="flex items-center gap-2"><span class="text-sm text-yellow-600">2대 연결 끊김</span><span class="w-3 h-3 rounded-full bg-yellow-500"></span></div></div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded"><span>AI 모델 서버</span><span class="w-3 h-3 rounded-full bg-green-500"></span></div>
+                    </div>
+                </div>
+
+                <!-- 개인정보 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-700 mb-4">🔒 개인정보 및 보안</h3>
+                    <div class="space-y-3 text-sm text-gray-600">
+                        <p>• 환자 데이터는 암호화되어 저장됩니다</p>
+                        <p>• 데이터 수집 전 환자 동의가 필요합니다</p>
+                        <p>• 접근 권한은 역할에 따라 제한됩니다</p>
+                    </div>
+                    <button class="mt-4 px-4 py-2 bg-gray-200 rounded text-sm">개인정보 처리방침 보기</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================== -->
+    <!-- JavaScript - 화면 전환 로직 -->
+    <!-- ============================== -->
+    <script>
+        // 화면 전환 함수 (로그인 <-> 회원가입 <-> 대시보드)
+        function showScreen(screenName) {
+            // 모든 screen 클래스 요소 숨기기
+            document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
+            // 선택한 화면만 보이기
+            document.getElementById('screen-' + screenName).classList.remove('hidden');
+        }
+
+        // 콘텐츠 전환 함수 (사이드바 메뉴 클릭 시)
+        function showContent(contentName) {
+            // 모든 content 클래스 요소 숨기기
+            document.querySelectorAll('.content').forEach(el => el.classList.add('hidden'));
+            // 선택한 콘텐츠만 보이기
+            document.getElementById('content-' + contentName).classList.remove('hidden');
+
+            // 메뉴 버튼 스타일 업데이트
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                btn.classList.remove('menu-active');
+                btn.classList.add('text-gray-400');
+            });
+            document.getElementById('menu-' + contentName).classList.add('menu-active');
+            document.getElementById('menu-' + contentName).classList.remove('text-gray-400');
+        }
+    </script>
+
+</body>
+</html>
