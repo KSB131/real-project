@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head><title>보고서</title></head>
+<body>
+    <div layout:fragment="content">
+        <div>
+            <h2 class="page-title">보고서 생성</h2>
+            <p class="page-description">환자별/기간별 자세 분석 보고서</p>
+        </div>
+
+        <!-- 보고서 옵션 -->
+        <div class="card">
+            <h3 class="card-title">보고서 옵션 선택</h3>
+            <form th:action="@{/reports/generate}" method="post">
+                <div class="options-grid">
+                    <div class="form-group">
+                        <label class="input-label">환자 선택</label>
+                        <select name="patientId" class="input-field">
+                            <option value="">전체 환자</option>
+                            <option th:each="p : ${patients}" th:value="${p.id}" th:text="${p.name}">환자명</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">기간</label>
+                        <select name="period" class="input-field">
+                            <option value="daily">일별</option>
+                            <option value="weekly">주별</option>
+                            <option value="monthly">월별</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label">출력 형식</label>
+                        <select name="format" class="input-field">
+                            <option value="pdf">PDF</option>
+                            <option value="web">웹 보고서</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:auto; padding:0 24px; margin-top:16px;">보고서 생성</button>
+            </form>
+        </div>
+
+        <!-- 미리보기 -->
+        <div class="card" style="border:2px dashed #93c5fd;">
+            <h3 class="card-title">📄 보고서 미리보기 (예시)</h3>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">분석 기간</div>
+                    <div class="summary-value">2026.01.20 ~ 01.27</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">총 체위 변경 횟수</div>
+                    <div class="summary-value" style="font-size:24px;">156회</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">평균 유지 시간</div>
+                    <div class="summary-value" style="font-size:24px;">1.8시간</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">욕창 단계 변화</div>
+                    <div class="summary-value text-green" style="font-weight:bold;">개선 ↓</div>
+                </div>
+            </div>
+            <div class="chart-grid">
+                <div class="chart-placeholder">📊 자세 빈도 차트</div>
+                <div class="chart-placeholder">📈 유지 시간 추이</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-small" style="background:#dc2626; color:white;">📥 PDF 다운로드</button>
+                <button class="btn btn-small">🔗 공유 링크</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

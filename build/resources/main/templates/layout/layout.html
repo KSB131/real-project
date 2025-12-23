@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - QuadCore">QuadCore</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- ============================================== -->
+    <!-- 메인 레이아웃 (로그인 후)                       -->
+    <!-- ============================================== -->
+    <div class="main-layout">
+        
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-image">LOGO</div>
+                <h1 class="sidebar-title">QuadCore</h1>
+                <p class="sidebar-subtitle">욕창방지 관제 시스템</p>
+            </div>
+
+            <!-- 메뉴 -->
+            <nav class="sidebar-menu">
+                <!-- th:classappend로 현재 페이지 활성화 표시 -->
+                <a th:href="@{/dashboard}" 
+                   th:classappend="${currentPage == 'dashboard'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">📊 대시보드</div>
+                    <div class="menu-desc">HRGG_500</div>
+                </a>
+                <a th:href="@{/patients}" 
+                   th:classappend="${currentPage == 'patients'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">🛏️ 침상 관리</div>
+                    <div class="menu-desc">HRGG_300~400</div>
+                </a>
+                <a th:href="@{/monitoring}" 
+                   th:classappend="${currentPage == 'monitoring'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">👁️ 실시간 모니터링</div>
+                    <div class="menu-desc">FR-MO</div>
+                </a>
+                <a th:href="@{/alerts}" 
+                   th:classappend="${currentPage == 'alerts'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">🔔 알림 센터</div>
+                    <div class="menu-desc">HRGG_600</div>
+                </a>
+                <a th:href="@{/guide}" 
+                   th:classappend="${currentPage == 'guide'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">📖 체위 가이드</div>
+                    <div class="menu-desc">HRGG_700</div>
+                </a>
+                <a th:href="@{/reports}" 
+                   th:classappend="${currentPage == 'reports'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">📄 보고서</div>
+                    <div class="menu-desc">HRGG_800</div>
+                </a>
+                <a th:href="@{/settings}" 
+                   th:classappend="${currentPage == 'settings'} ? 'active' : ''"
+                   class="menu-item">
+                    <div class="menu-text">⚙️ 설정</div>
+                    <div class="menu-desc">NFR</div>
+                </a>
+            </nav>
+
+            <!-- 로그아웃 -->
+            <a th:href="@{/logout}" class="btn-logout">🚪 로그아웃</a>
+        </aside>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <main class="main-content">
+            <!-- 각 페이지 콘텐츠가 여기에 삽입됨 -->
+            <div layout:fragment="content"></div>
+        </main>
+    </div>
+
+</body>
+</html>
