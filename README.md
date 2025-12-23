@@ -93,19 +93,55 @@ java -version
 ## 📂 프로젝트 구조
 
 ```
-src
-├── main
-│   ├── java
-│   │   └── com.quadcore
-│   │       ├── QuadCoreApplication.java
-│   │       └── controller
-│   └── resources
-│       ├── templates/
-│       └── static/
-├── build.gradle
-└── application.properties
+spring-wireframe/
+│
+├── build.gradle                              # Gradle 빌드 설정
+│
+└── src/main/
+    │
+    ├── java/com/quadcore/
+    │   │
+    │   ├── QuadCoreApplication.java          # 메인 클래스 (@SpringBootApplication)
+    │   │
+    │   └── controller/
+    │       └── MainController.java           # 컨트롤러 (URL 라우팅)
+    │
+    └── resources/
+        │
+        ├── application.properties            # Spring 설정 (포트, DB 등)
+        │
+        ├── static/css/
+        │   └── style.css                     # CSS 스타일
+        │
+        └── templates/
+            │
+            ├── layout/
+            │   └── layout.html               # 공통 레이아웃 (사이드바)
+            │
+            ├── login.html                    # 로그인 페이지
+            ├── register.html                 # 회원가입 페이지
+            ├── dashboard.html                # 대시보드
+            ├── patients.html                 # 침상 관리
+            ├── monitoring.html               # 실시간 모니터링
+            ├── alerts.html                   # 알림 센터
+            ├── guide.html                    # 체위 가이드
+            ├── reports.html                  # 보고서
+            └── settings.html                 # 설정
+```
+## 파일별 역할
+
 ```
 
+| 파일 | 설명 |
+|------|------|
+| `QuadCoreApplication.java` | 앱 시작점 (main 메서드) |
+| `MainController.java` | URL → 화면 연결 |
+| `application.properties` | DB, 포트 등 설정 |
+| `style.css` | 전체 스타일 |
+| `layout.html` | 사이드바 + 공통 구조 |
+| `*.html` | 각 페이지 화면 |
+
+```
 ---
 
 ## 🤝 기여 방법 (선택)
