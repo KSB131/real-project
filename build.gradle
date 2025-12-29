@@ -21,32 +21,26 @@ repositories {
 }
 
 dependencies {
-    // ============================================
+    // 실시간 반영
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
     // Spring Boot 핵심
-    // ============================================
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    
-    // ============================================
+
     // Thymeleaf 레이아웃 (layout:decorate 사용)
-    // ============================================
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    // 데이터베이스
+     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 보안
+     implementation 'org.springframework.boot:spring-boot-starter-security'
+     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     
-    // ============================================
-    // 데이터베이스 (필요시 주석 해제)
-    // ============================================
-    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // runtimeOnly 'com.mysql:mysql-connector-j'
-    
-    // ============================================
-    // 보안 (필요시 주석 해제)
-    // ============================================
-    // implementation 'org.springframework.boot:spring-boot-starter-security'
-    // implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    
-    // ============================================
+
     // 유효성 검사
-    // ============================================
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     
     // ============================================

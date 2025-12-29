@@ -32,8 +32,8 @@ public class MainController {
      * POST /login
      */
     @PostMapping("/login")
-    public String loginProcess(@RequestParam String username,
-                               @RequestParam String password,
+    public String loginProcess(@RequestParam String id,
+                               @RequestParam String pw,
                                Model model) {
         // TODO: 실제 로그인 로직 구현
         // Spring Security 사용 시 이 메서드 불필요
