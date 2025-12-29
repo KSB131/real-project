@@ -1,0 +1,8 @@
+package com.carepose.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.carepose.domain.Member;
+
+@repository
+public interface MemberRepository extends JpaRepository<Member, Long> {
+}

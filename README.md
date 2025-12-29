@@ -43,7 +43,7 @@ java -version
 1. **Eclipse에서**
    `File` → `Import` → `Gradle` → `Existing Gradle Project` 선택
 2. 루트 폴더 선택 후 Finish
-3. `src/main/java/com.quadcore.QuadCoreApplication` 우클릭 → Run As → Java Application
+3. `src/main/java/com.carepose.QuadCoreApplication` 우클릭 → Run As → Java Application
 
 ---
 

@@ -1,0 +1,15 @@
+package com.carepose.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class RegisterRequest {
+
+    @NotBlank(message = "비밀번호를 입력하세요.")
+    private String pw;
+
+    @NotBlank(message = "담당 구역을 입력하세요.")
+    private String roomAuthority; // 601CARE / 6NURS
+}

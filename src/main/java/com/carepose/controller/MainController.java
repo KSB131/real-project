@@ -1,4 +1,4 @@
-package com.quadcore.controller;
+package com.carepose.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,16 +57,24 @@ public class MainController {
      */
     @PostMapping("/register")
     public String registerProcess(@RequestParam String username,
-                                  @RequestParam String email,
                                   @RequestParam String password,
-                                  @RequestParam String passwordConfirm,
-                                  @RequestParam String role,
+                                  @RequestParam String pwConfirm,
+                                  @RequestParam String roomAuthority,
                                   Model model) {
         // TODO: 회원가입 로직 구현
         // 1. 비밀번호 확인
+        if(!pw.equales(pwConfirm)){
+            model.addAttribute("error","비밀번호 확인이 일치하지 않습니다.");
+            return "register";
+        }
         // 2. 중복 체크
+
+
         // 3. DB 저장
-        
+        Member saved = memberRepository.save(
+                com.carepose.domain.Member.builder().pw(pw).roomAuthority(roomAuthority),build());
+
+
         return "redirect:/login";
     }
 
