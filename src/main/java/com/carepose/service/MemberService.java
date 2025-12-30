@@ -1,8 +1,8 @@
 package com.carepose.service;
 
-import com.carepose.domain.Member;
+import com.carepose.entity.Member;
 import com.carepose.dto.RegisterRequest;
-import com.carepose.repo.MemberRepository;
+import com.carepose.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +25,8 @@ public class MemberService {
         return saved.getId();
     }
 
-    private class MemberRepository {
+    public Member save(Member member) {
+        return memberRepository.save(member);
     }
+
 }

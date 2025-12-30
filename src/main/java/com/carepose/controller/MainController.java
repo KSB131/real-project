@@ -1,5 +1,9 @@
 package com.carepose.controller;
 
+import com.carepose.repository.MemberRepository;
+import com.carepose.entity.Member;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
  * 실제 개발 시 Service 클래스와 연동하세요.
  */
 @Controller
+@RequiredArgsConstructor
 public class MainController {
+
+    private final MemberRepository memberRepository;
 
     // ------------------------------------------
     // 로그인 관련
@@ -56,14 +63,15 @@ public class MainController {
      * POST /register
      */
     @PostMapping("/register")
-    public String registerProcess(@RequestParam String username,
-                                  @RequestParam String password,
+    public String registerProcess(@RequestParam String id,
+                                  @RequestParam String pw,
                                   @RequestParam String pwConfirm,
                                   @RequestParam String roomAuthority,
                                   Model model) {
         // TODO: 회원가입 로직 구현
         // 1. 비밀번호 확인
-        if(!pw.equales(pwConfirm)){
+
+        if(!pw.equals(pwConfirm)){
             model.addAttribute("error","비밀번호 확인이 일치하지 않습니다.");
             return "register";
         }
@@ -72,7 +80,7 @@ public class MainController {
 
         // 3. DB 저장
         Member saved = memberRepository.save(
-                com.carepose.domain.Member.builder().pw(pw).roomAuthority(roomAuthority),build());
+                com.carepose.entity.Member.builder().pw(pw).roomAuthority(roomAuthority).build());
 
 
         return "redirect:/login";

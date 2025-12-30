@@ -1,4 +1,4 @@
-package com.carepose.domain;
+package com.carepose.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
