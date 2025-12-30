@@ -1,0 +1,13 @@
+# IntelliJ 관련 설정 파일 제외
+.idea/
+*.iml
+out/
+gen/
+
+# 빌드 결과물 제외
+build/
+target/
+
+# OS 생성 파일 제외
+.DS_Store
+Thumbs.db
