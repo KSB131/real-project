@@ -6,8 +6,10 @@
     <title>실시간 모니터링</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-
+<body class="auth-mode">
+	
+	
+	
     <div layout:fragment="content">
         
         <!-- 페이지 헤더 -->
@@ -47,14 +49,17 @@
             </div>
 
             <!-- 샘플 데이터 -->
-            <th:block th:if="${#lists.isEmpty(cameras)}">
+            <th:block th:if="${cameras == null or #lists.isEmpty(cameras)}">
                 <div class="camera-card">
                     <div class="camera-view">
                         카메라 영상
                         <div class="camera-status-badge camera-status-normal">정상</div>
                     </div>
                     <div class="camera-info">
-                        <div><span class="bed-id">101-A</span><span class="patient-name">김○○</span></div>
+                        <div>
+                        	<span class="bed-id" >101-A</span>
+                        	<span class="patient-name" >김○○</span>
+                        </div>
                         <span class="current-pose">현재: 좌측위</span>
                     </div>
                 </div>
