@@ -17,30 +17,20 @@ public class MainController {
 	@Autowired
 	MemberRepository memberRepository;
 
-	@GetMapping("/nursmain")
+	@GetMapping("/caremain")
 		public String nursmain() {
 	return "monitoring";
 	}
 
-	@GetMapping("/caremain")
+	@GetMapping("/nursmain")
 	public String caremain() {
 		return "dashboard";
 	}
 	
-	@PostMapping("/login")
-	public String login(MemberEntity entity , HttpSession session) {
-		entity = memberRepository.findByUsernameAndPassword(entity.getUsername(),entity.getPassword());
-		
-		if(entity !=null) {
-			session.setAttribute("entity", entity);					
-		}
-	return "redirect:/";
+	
+	@GetMapping("/login")
+	public String loginPage() {
+		return "login";
 	}
-	
-	
-	
-	
-	
-	
 	
 }
