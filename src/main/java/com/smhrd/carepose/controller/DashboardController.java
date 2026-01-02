@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 public class DashboardController {
 	
+	@GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard"; // dashboard.html 실행
+    }
+	
 	 @GetMapping({"/", "/dashboard"})
 	    public String dashboardPage(Model model) {
 	        // 현재 페이지 표시 (사이드바 메뉴 활성화용)

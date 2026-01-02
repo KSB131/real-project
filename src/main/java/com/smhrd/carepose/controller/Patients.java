@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public class Patients {
 	
+	@GetMapping("/patients")
+    public String patients() {
+        return "patients"; // ward-status.html 실행
+    }
+	
 	 @GetMapping("/patients")
 	    public String patientsPage(@RequestParam(required = false) String keyword,
 	                               @RequestParam(required = false) Long roomFilter,
