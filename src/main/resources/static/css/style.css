@@ -52,17 +52,10 @@ body {
     margin-bottom: 32px;
 }
 
-.login-logo-image {
+.login-logo-image img {
     width: 64px;
-    height: 64px;
-    background-color: #d1d5db;
-    border-radius: 50%;
-    margin: 0 auto 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6b7280;
-    font-size: 12px;
+    height: 80px;
+    object-fit:contain;
 }
 
 .login-title {
